@@ -272,6 +272,12 @@ func (j *Jenkins) BuildJob(name string, options ...interface{}) (int64, error) {
 	}
 	return job.InvokeSimple(params)
 }
+func (j *Jenkins) YxBuildJob(name string,parentIDs ...string) (int64, error) {
+	job := Job{Jenkins: j, Raw: new(JobResponse), Base: "/job/" + strings.Join(append(parentIDs, name), "/job/")}
+	var params map[string]string
+	return job.InvokeSimple(params)
+}
+
 
 func (j *Jenkins) GetNode(name string) (*Node, error) {
 	node := Node{Jenkins: j, Raw: new(NodeResponse), Base: "/computer/" + name}
